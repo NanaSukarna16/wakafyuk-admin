@@ -35,5 +35,5 @@ export function FirebaseProvidder({ children }: PropsWithChildren) {
     }
   }, [isFirebaseInitialized]);
 
-  return isFirebaseInitialized ? children : <p>Loading...</p>;
+  return isFirebaseInitialized ? <>{children}</> : <p>Loading...</p>;
 }

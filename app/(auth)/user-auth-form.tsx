@@ -10,11 +10,11 @@ import {
 } from "firebase/auth";
 import { Loader2 } from "lucide-react";
 
-import { cn, isEmail } from "@/lib/utils";
+import { cn, getHttpClient, isEmail } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import axios, { AxiosError } from "axios";
+import { AxiosError } from "axios";
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
@@ -36,13 +36,10 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
         return signInWithEmailAndPassword(auth, username, password);
       }
 
-      const res = await axios.post(
-        "http://localhost:3001/auth/username_login",
-        {
-          username,
-          password,
-        }
-      );
+      const res = await getHttpClient().post("/auth/username_login", {
+        username,
+        password,
+      });
 
       if (res.status !== 200) {
         throw new Error("Gagal Login. Error di API");
